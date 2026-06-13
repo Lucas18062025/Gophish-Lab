@@ -1,8 +1,8 @@
 <div align="center">
 
-# 🎣 Gophish Lab
+<h1 style="font-size:3em;">🎣 Gophish Lab</h1>
 
-### Laboratorio de simulación de phishing | GoPhish + Mailpit | Kali Linux
+<h3>Laboratorio de simulación de phishing | GoPhish + Mailpit | Kali Linux</h3>
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
