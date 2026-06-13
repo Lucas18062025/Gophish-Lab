@@ -1,6 +1,6 @@
 <div align="center">
 
-<h1 style="font-size:3em;">🎣 Gophish Lab</h1>
+<h1 style="font-size:3.5em; font-weight:900; letter-spacing:-1px;">🎣 Gophish Lab</h1>
 
 <h3>Laboratorio de simulación de phishing | GoPhish + Mailpit | Kali Linux</h3>
 
@@ -10,7 +10,7 @@
 ![Status](https://img.shields.io/badge/status-lab%20completado-success?style=for-the-badge)
 
 </div>
-📌 Descripción
+## 🚀 Descripción
 
 Laboratorio práctico de simulación de phishing desarrollado con **GoPhish** y **Mailpit** en un entorno controlado de laboratorio.
 
