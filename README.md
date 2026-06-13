@@ -1,7 +1,15 @@
+<div align="center">
+
 # 🎣 Gophish Lab
 
-![License](https://img.shields.io/badge/License-MIT-green.svg)
+### Laboratorio de simulación de phishing | GoPhish + Mailpit | Kali Linux
 
+![Version](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)
+![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
+![Platform](https://img.shields.io/badge/platform-Kali%20Linux-purple?style=for-the-badge&logo=linux)
+![Status](https://img.shields.io/badge/status-lab%20completado-success?style=for-the-badge)
+
+</div>
 ## 📌 Descripción
 
 Laboratorio práctico de simulación de phishing desarrollado con **GoPhish** y **Mailpit** en un entorno controlado de laboratorio.
