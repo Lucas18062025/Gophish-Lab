@@ -50,32 +50,52 @@ Gophish-Lab/
 
 ---
 
-## 📸 Evidencias
+## 📸 Evidencias del Laboratorio
 
-Las capturas del laboratorio se almacenan en:
-
-```text
-screenshots/
-```
-
-Incluyen:
-
-* Dashboard de GoPhish
-* Configuración de campañas
-* Plantillas de correo
-* Landing Pages
-* Resultados y métricas
+### 01 — Dashboard GoPhish — Métricas en tiempo real
+![Dashboard GoPhish](screenshots/01-gophish-dashboard.png)
+> Campaña "Viernes 12": Email Sent ✅ · Opened ✅ · Clicked ✅ · Submitted ✅
 
 ---
 
-## 📊 Resultados
+### 02 — Editor de Email Template HTML
+![Email Template Editor](screenshots/02-email-template-editor.png)
+> Template con branding Cisco construido en HTML puro con variables GoPhish: `{{.FirstName}}` y `{{.URL}}`.
 
-Durante el laboratorio se analizaron:
+---
 
-* Apertura de correos
-* Clics en enlaces
-* Envío de credenciales simuladas
-* Métricas de interacción
+### 03 — Email phishing renderizado en Mailpit
+![Email Cisco en Mailpit](screenshots/03-mailpit-email-rendered.png)
+> Branding Cisco con SVG inline. Personalización activa: "Estimado/a jhon,"
+> Header azul #049fd9, CTA button, footer con copyright Cisco 2026.
+
+---
+
+### 07 — Timeline forense + Credenciales capturadas
+![Credentials Captured](screenshots/07-credentials-captured.png)
+> Ciclo completo cerrado. Tiempo total del ataque: **3 minutos 6 segundos**.
+
+| Evento | Timestamp | Delta |
+|---|---|---|
+| Email Sent | 7:17:49 pm | baseline |
+| Email Opened | 7:17:59 pm | +10 seg |
+| Clicked Link | 7:18:05 pm | +16 seg |
+| Submitted Data | 7:20:55 pm | +3 min 6 seg |
+
+> OS detectado automáticamente: Linux x86_64 · Firefox 140.0
+
+---
+
+## 📊 Resultados de la Campaña
+
+| Métrica | Resultado |
+|---|---|
+| Email Sent | 1 / 1 (100%) |
+| Email Opened | 1 / 1 (100%) |
+| Clicked Link | 1 / 1 (100%) |
+| Submitted Data | 1 / 1 (100%) |
+| Tiempo hasta compromiso | 3 min 6 seg |
+| Detección por el target | 0 |
 
 ---
 
