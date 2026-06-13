@@ -1,0 +1,168 @@
+# =============================================================================
+# .gitignore — Gophish-Lab | Lucas Villagra | Tucumán, Argentina
+# Scope: Kali Linux VM lab, GoPhish binary + config, Python scripts, reports
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# GOPHISH BINARY & RUNTIME FILES
+# Never commit the binary itself (download from official releases)
+# ---------------------------------------------------------------------------
+gophish
+gophish.exe
+*.zip
+*.tar.gz
+*.tar.bz2
+
+# GoPhish database (contains credentials, campaign data, targets)
+gophish.db
+*.db
+*.sqlite
+*.sqlite3
+
+# GoPhish runtime PID
+*.pid
+
+# ---------------------------------------------------------------------------
+# GOPHISH CONFIGURATION — NEVER COMMIT REAL CONFIGS
+# Use config.json.example as template instead
+# ---------------------------------------------------------------------------
+config.json
+config.local.json
+*.secret.json
+
+# ---------------------------------------------------------------------------
+# CERTIFICATES & KEYS — CRITICAL: NEVER TO GIT
+# ---------------------------------------------------------------------------
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+*.jks
+gophish_admin.crt
+gophish_admin.key
+phish_server.crt
+phish_server.key
+
+# ---------------------------------------------------------------------------
+# CAMPAIGN DATA & REPORTS — SENSITIVE AUDIT OUTPUT
+# Contains real target emails, click rates, credentials captured
+# ---------------------------------------------------------------------------
+campaigns/
+reports/output/
+reports/*.pdf
+reports/*.docx
+reports/*.xlsx
+results/
+exports/
+*.csv
+!templates/targets_example.csv
+
+# ---------------------------------------------------------------------------
+# PYTHON ENVIRONMENT
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.Python
+venv/
+.venv/
+env/
+ENV/
+.env
+.env.local
+.env.*.local
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ---------------------------------------------------------------------------
+# SECRETS & CREDENTIALS — ABSOLUTE ZERO TOLERANCE
+# ---------------------------------------------------------------------------
+.secrets/
+secrets.yaml
+secrets.yml
+credentials.json
+api_keys.json
+*.token
+.api_key
+smtp_credentials.txt
+sender_profile.json
+target_list.txt
+targets_real.csv
+
+# ---------------------------------------------------------------------------
+# LOGS
+# ---------------------------------------------------------------------------
+*.log
+logs/
+gophish.log
+setup.log
+audit.log
+
+# ---------------------------------------------------------------------------
+# OS FILES
+# ---------------------------------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ---------------------------------------------------------------------------
+# VS CODE
+# ---------------------------------------------------------------------------
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json.example
+
+# ---------------------------------------------------------------------------
+# DOCKER (si se agrega en futuras versiones)
+# ---------------------------------------------------------------------------
+docker-compose.override.yml
+.docker/
+
+# ---------------------------------------------------------------------------
+# KALI LAB ARTIFACTS — LOCAL ONLY
+# ---------------------------------------------------------------------------
+wordlists/
+captures/
+pcap/
+*.pcap
+*.cap
+*.hccapx
+lab_notes_private/
+scope_real.txt
+
+# ---------------------------------------------------------------------------
+# NODE / npm (si se usan herramientas JS auxiliares)
+# ---------------------------------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ---------------------------------------------------------------------------
+# TEMP & BACKUP
+# ---------------------------------------------------------------------------
+*.tmp
+*.bak
+*.swp
+*.orig
+*_backup
+*_old
+.cache/
+tmp/
+temp/
