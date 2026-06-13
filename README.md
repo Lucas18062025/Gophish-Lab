@@ -26,7 +26,7 @@ El objetivo del proyecto es comprender el ciclo completo de una campaña de inge
 
 ## 🎯 Objetivos del laboratorio
 
-* Comprender el funcionamiento de GoPhish.
+* Mostrar el funcionamiento de GoPhish.
 * Diseñar campañas de concientización.
 * Crear plantillas de correo personalizadas.
 * Implementar páginas de captura simuladas.
