@@ -10,7 +10,7 @@
 ![Status](https://img.shields.io/badge/status-lab%20completado-success?style=for-the-badge)
 
 </div>
-## 📌 Descripción
+📌 Descripción
 
 Laboratorio práctico de simulación de phishing desarrollado con **GoPhish** y **Mailpit** en un entorno controlado de laboratorio.
 
