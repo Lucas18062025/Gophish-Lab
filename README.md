@@ -1,5 +1,7 @@
 # 🎣 Gophish Lab
 
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+
 ## 📌 Descripción
 
 Laboratorio práctico de simulación de phishing desarrollado con **GoPhish** y **Mailpit** en un entorno controlado de laboratorio.
