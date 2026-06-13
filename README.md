@@ -8,7 +8,7 @@ Laboratorio práctico de simulación de phishing desarrollado con **GoPhish** y 
 
 El objetivo del proyecto es comprender el ciclo completo de una campaña de ingeniería social desde una perspectiva defensiva y educativa, documentando la creación de plantillas, páginas de aterrizaje, perfiles SMTP y análisis de resultados.
 
-> ⚠️ Este laboratorio fue realizado exclusivamente con fines educativos y de concientización en ciberseguridad. No se utilizaron usuarios ni sistemas reales.
+> ⚠️ Este laboratorio fue realizado exclusivamente con fines educativos y de concientización en ciberseguridad.
 
 ---
 
@@ -26,7 +26,7 @@ El objetivo del proyecto es comprender el ciclo completo de una campaña de inge
 
 ## 🎯 Objetivos del laboratorio
 
-* Comprender el funcionamiento de GoPhish.
+* Mostrar el funcionamiento de GoPhish.
 * Diseñar campañas de concientización.
 * Crear plantillas de correo personalizadas.
 * Implementar páginas de captura simuladas.
