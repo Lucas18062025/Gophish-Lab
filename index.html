@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gophish Lab — Simulación de Phishing | GoPhish + Mailpit</title>
+<meta name="description" content="Laboratorio de simulación de phishing con GoPhish + Mailpit en Kali Linux. 100% de la campaña comprometida en 3 min 6 seg — análisis forense completo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e14;
+    --bg-panel:#0f1420;
+    --bg-terminal:#080b11;
+    --line:#1c2433;
+    --text:#c8d1e0;
+    --muted:#5f6b80;
+    --green:#3ef08c;
+    --green-dim:#1f8a52;
+    --red:#ff4d6a;
+    --amber:#ffb84d;
+    --cyan:#4dd7ff;
+    --mono: 'JetBrains Mono', monospace;
+    --display: 'Space Grotesk', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--mono);
+    line-height:1.6;
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(62,240,140,0.06), transparent 45%),
+      radial-gradient(circle at 85% 20%, rgba(77,215,255,0.05), transparent 40%);
+  }
+  a{color:var(--cyan); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,14,20,0.85); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; padding:14px 24px;}
+  .brand{font-family:var(--display); font-weight:700; font-size:1rem; color:var(--text); display:flex; align-items:center; gap:8px;}
+  .brand .dot{width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); animation:blink 2s infinite;}
+  @keyframes blink{0%,100%{opacity:1;} 50%{opacity:.3;}}
+  .navlinks{display:flex; gap:22px; font-size:.8rem;}
+  .navlinks a{color:var(--muted);}
+  .navlinks a:hover{color:var(--green); text-decoration:none;}
+
+  /* ---------- HERO / TERMINAL ---------- */
+  header.hero{padding:64px 0 40px;}
+  .eyebrow{color:var(--green); font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; margin-bottom:14px; display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:'>'; color:var(--green-dim);}
+  h1{
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(2rem, 5vw, 3.1rem); line-height:1.08; color:#fff;
+    letter-spacing:-0.02em; margin-bottom:16px;
+  }
+  h1 span{color:var(--green);}
+  .lede{color:var(--muted); font-size:1rem; max-width:56ch; margin-bottom:28px;}
+  .badges{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:36px;}
+  .badge{
+    font-size:.68rem; padding:5px 10px; border:1px solid var(--line);
+    border-radius:4px; color:var(--muted); background:var(--bg-panel);
+    text-transform:uppercase; letter-spacing:.04em;
+  }
+  .badge.ok{color:var(--green); border-color:var(--green-dim);}
+
+  .terminal{
+    background:var(--bg-terminal); border:1px solid var(--line); border-radius:10px;
+    overflow:hidden; box-shadow:0 20px 60px -20px rgba(0,0,0,.6);
+  }
+  .terminal-bar{
+    display:flex; align-items:center; gap:8px; padding:10px 14px;
+    background:#0c1119; border-bottom:1px solid var(--line);
+  }
+  .terminal-bar .tdot{width:10px; height:10px; border-radius:50%;}
+  .terminal-bar .r{background:#ff5f57;} .terminal-bar .y{background:#ffbd2e;} .terminal-bar .g{background:#28c840;}
+  .terminal-bar .title{margin-left:8px; font-size:.72rem; color:var(--muted);}
+  .terminal-body{padding:18px 20px 22px; font-size:.82rem;}
+  .terminal-body .line{margin-bottom:6px; white-space:pre-wrap;}
+  .terminal-body .prompt{color:var(--green);}
+  .terminal-body .cmd{color:#fff;}
+  .terminal-body .out{color:var(--muted);}
+  .terminal-body .ok-tag{color:var(--green);}
+  .terminal-body .warn-tag{color:var(--amber);}
+  .terminal-body .alert-tag{color:var(--red);}
+  .cursor{display:inline-block; width:7px; height:14px; background:var(--green); animation:blink 1s infinite steps(1); vertical-align:middle;}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:56px 0; border-top:1px solid var(--line);}
+  .section-head{display:flex; align-items:baseline; gap:12px; margin-bottom:28px;}
+  .section-head .num{font-size:.75rem; color:var(--green-dim); font-family:var(--mono);}
+  .section-head h2{font-family:var(--display); font-size:1.5rem; color:#fff; font-weight:600;}
+  .section-sub{color:var(--muted); font-size:.88rem; margin-top:-18px; margin-bottom:26px; max-width:60ch;}
+
+  /* ---------- STATS ---------- */
+  .stats-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+  .stat{background:var(--bg-panel); padding:20px 18px;}
+  .stat .val{font-family:var(--display); font-size:1.7rem; font-weight:700; color:var(--green);}
+  .stat .label{font-size:.72rem; color:var(--muted); margin-top:4px; text-transform:uppercase; letter-spacing:.04em;}
+  .stat.alert .val{color:var(--red);}
+
+  /* ---------- TIMELINE (forensic log) ---------- */
+  .timeline{border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--bg-panel);}
+  .tl-row{
+    display:grid; grid-template-columns:16px 1fr auto auto; gap:14px; align-items:center;
+    padding:13px 18px; border-bottom:1px solid var(--line); font-size:.82rem;
+  }
+  .tl-row:last-child{border-bottom:none;}
+  .tl-dot{width:8px; height:8px; border-radius:50%; background:var(--muted);}
+  .tl-row.a .tl-dot{background:var(--green);}
+  .tl-row.b .tl-dot{background:var(--cyan);}
+  .tl-row.c .tl-dot{background:var(--amber);}
+  .tl-row.d .tl-dot{background:var(--red);}
+  .tl-event{color:var(--text); font-weight:500;}
+  .tl-time{color:var(--muted);}
+  .tl-delta{color:var(--muted); font-size:.75rem; min-width:80px; text-align:right;}
+  .tl-delta.hot{color:var(--red);}
+
+  /* ---------- GRID GALLERY ---------- */
+  .shot-grid{display:grid; grid-template-columns:1fr; gap:18px;}
+  .shot{border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--bg-panel);}
+  .shot img{display:block; width:100%; height:auto;}
+  .shot-cap{padding:12px 16px; font-size:.78rem; color:var(--muted); border-top:1px solid var(--line);}
+  .shot-cap b{color:var(--text);}
+
+  /* ---------- STACK / LEARNINGS ---------- */
+  .pill-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .pill{font-size:.78rem; padding:7px 13px; border:1px solid var(--line); border-radius:20px; color:var(--text); background:var(--bg-panel);}
+  ul.checklist{list-style:none;}
+  ul.checklist li{padding:8px 0; padding-left:22px; position:relative; font-size:.88rem; color:var(--text); border-bottom:1px solid var(--line);}
+  ul.checklist li:last-child{border-bottom:none;}
+  ul.checklist li::before{content:'✓'; position:absolute; left:0; color:var(--green);}
+
+  /* ---------- ETHICS ---------- */
+  .ethics{
+    border:1px solid var(--red); border-left:3px solid var(--red);
+    background:rgba(255,77,106,0.06); border-radius:6px; padding:18px 20px; font-size:.85rem; color:var(--text);
+  }
+  .ethics b{color:var(--red);}
+
+  /* ---------- FOOTER / CTA ---------- */
+  footer{padding:48px 0 60px; text-align:center;}
+  .cta-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:22px;}
+  .btn{
+    font-family:var(--mono); font-size:.85rem; padding:12px 22px; border-radius:6px;
+    border:1px solid var(--line); color:var(--text); transition:all .15s ease;
+  }
+  .btn.primary{background:var(--green); color:#04140b; border-color:var(--green); font-weight:700;}
+  .btn.primary:hover{background:#57f5a0; text-decoration:none;}
+  .btn:not(.primary):hover{border-color:var(--green); color:var(--green); text-decoration:none;}
+  .foot-note{color:var(--muted); font-size:.75rem;}
+
+  @media (max-width:600px){
+    .tl-row{grid-template-columns:12px 1fr; row-gap:4px;}
+    .tl-time, .tl-delta{grid-column:2; text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span> gophish-lab</div>
+    <div class="navlinks">
+      <a href="#campana">Campaña</a>
+      <a href="#evidencia">Evidencia</a>
+      <a href="#stack">Stack</a>
+      <a href="https://github.com/Lucas18062025/Gophish-Lab">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">lab report / social engineering</div>
+    <h1>Ciclo completo de una campaña de <span>phishing</span>,<br>de la plantilla a la credencial capturada.</h1>
+    <p class="lede">Laboratorio práctico con GoPhish + Mailpit en Kali Linux: creación de plantillas, landing pages, perfiles SMTP y análisis forense de resultados — con fines educativos y de concientización en PyMEs.</p>
+    <div class="badges">
+      <span class="badge ok">status: lab completado</span>
+      <span class="badge">version 1.0.0</span>
+      <span class="badge">license MIT</span>
+      <span class="badge">platform Kali Linux</span>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+        <span class="title">jphish — kali@kali:~</span>
+      </div>
+      <div class="terminal-body">
+        <div class="line"><span class="prompt">kali@kali</span><span class="out">:~$</span> <span class="cmd">gophish campaign results --name "Viernes 12"</span></div>
+        <div class="line out">Resolviendo resultados de campaña...</div>
+        <div class="line"><span class="ok-tag">[✓]</span> <span class="out">Email Sent</span></div>
+        <div class="line"><span class="ok-tag">[✓]</span> <span class="out">Email Opened</span> <span class="out">(+10s)</span></div>
+        <div class="line"><span class="warn-tag">[!]</span> <span class="out">Clicked Link</span> <span class="out">(+16s)</span></div>
+        <div class="line"><span class="alert-tag">[✗]</span> <span class="out">Submitted Data</span> <span class="out">(+3m 6s) — credenciales capturadas</span></div>
+        <div class="line out">Detección por el target: 0</div>
+        <div class="line"><span class="prompt">kali@kali</span><span class="out">:~$</span> <span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="campana">
+  <div class="wrap">
+    <div class="section-head"><span class="num">01</span><h2>Resultados de la campaña</h2></div>
+    <p class="section-sub">Campaña "Viernes 12" — el objetivo abrió, hizo clic y envió credenciales en un único flujo, sin ser detectado.</p>
+    <div class="stats-grid">
+      <div class="stat"><div class="val">100%</div><div class="label">Email Sent</div></div>
+      <div class="stat"><div class="val">100%</div><div class="label">Email Opened</div></div>
+      <div class="stat"><div class="val">100%</div><div class="label">Clicked Link</div></div>
+      <div class="stat alert"><div class="val">100%</div><div class="label">Submitted Data</div></div>
+      <div class="stat"><div class="val">3m 6s</div><div class="label">Hasta compromiso</div></div>
+      <div class="stat"><div class="val">0</div><div class="label">Detección por target</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head"><span class="num">02</span><h2>Timeline forense</h2></div>
+    <p class="section-sub">Reconstrucción cronológica del ataque para el objetivo "jhon lennon" — OS detectado automáticamente: Linux x86_64 · Firefox 140.0</p>
+    <div class="timeline">
+      <div class="tl-row a">
+        <span class="tl-dot"></span>
+        <span class="tl-event">Email Sent</span>
+        <span class="tl-time">7:17:49 pm</span>
+        <span class="tl-delta">baseline</span>
+      </div>
+      <div class="tl-row b">
+        <span class="tl-dot"></span>
+        <span class="tl-event">Email Opened</span>
+        <span class="tl-time">7:17:59 pm</span>
+        <span class="tl-delta">+10 seg</span>
+      </div>
+      <div class="tl-row c">
+        <span class="tl-dot"></span>
+        <span class="tl-event">Clicked Link</span>
+        <span class="tl-time">7:18:05 pm</span>
+        <span class="tl-delta">+16 seg</span>
+      </div>
+      <div class="tl-row d">
+        <span class="tl-dot"></span>
+        <span class="tl-event">Submitted Data</span>
+        <span class="tl-time">7:20:55 pm</span>
+        <span class="tl-delta hot">+3 min 6 seg</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="evidencia">
+  <div class="wrap">
+    <div class="section-head"><span class="num">03</span><h2>Evidencia del laboratorio</h2></div>
+    <p class="section-sub">Capturas completas de la campaña, con branding de prueba (Cisco 2026) construido en HTML puro sobre plantillas de GoPhish.</p>
+    <div class="shot-grid">
+      <div class="shot">
+        <img src="screenshots/01-gophish-dashboard.png" alt="Dashboard de GoPhish con métricas en tiempo real de la campaña Viernes 12" loading="lazy">
+        <div class="shot-cap"><b>Dashboard GoPhish</b> — métricas en tiempo real: Sent · Opened · Clicked · Submitted, todo en verde.</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/02-email-template-editor.png" alt="Editor de plantilla de email HTML en GoPhish" loading="lazy">
+        <div class="shot-cap"><b>Editor de Email Template</b> — HTML puro con variables GoPhish (<code>{{.FirstName}}</code>, <code>{{.URL}}</code>).</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/07-credentials-captured.png" alt="Timeline forense y credenciales capturadas en GoPhish" loading="lazy">
+        <div class="shot-cap"><b>Timeline forense</b> — vista de detalle con parámetros capturados: usuario y contraseña.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="section-head"><span class="num">04</span><h2>Stack y aprendizajes</h2></div>
+    <p class="section-sub">Tecnologías usadas para levantar el laboratorio completo, de punta a punta.</p>
+    <div class="pill-row" style="margin-bottom:32px;">
+      <span class="pill">🐉 Kali Linux</span>
+      <span class="pill">🎣 GoPhish</span>
+      <span class="pill">📬 Mailpit</span>
+      <span class="pill">🌐 HTML</span>
+      <span class="pill">📝 Markdown</span>
+      <span class="pill">🔧 Git</span>
+      <span class="pill">🐙 GitHub</span>
+    </div>
+    <ul class="checklist">
+      <li>Diseño de campañas de phishing controladas</li>
+      <li>Configuración de perfiles SMTP</li>
+      <li>Creación de landing pages</li>
+      <li>Análisis de resultados</li>
+      <li>Buenas prácticas de concientización</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head"><span class="num">05</span><h2>Aviso ético</h2></div>
+    <div class="ethics">
+      <b>Uso exclusivamente educativo.</b> Este repositorio tiene fines de laboratorio y capacitación en ciberseguridad. No se promueve el uso indebido de las herramientas documentadas.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cta-row">
+      <a class="btn primary" href="https://github.com/Lucas18062025/Gophish-Lab">Ver repositorio completo →</a>
+      <a class="btn" href="https://portafolio.lucaslean1806.workers.dev/">Ver portfolio</a>
+    </div>
+    <p class="foot-note">Lucas Villagra — Cybersecurity Analyst & Ethical Hacker · Tucumán, Argentina</p>
+  </div>
+</footer>
+
+</body>
+</html>
