@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- Gophish-Lab | Starter anonimizado con fines educativos.
+     Empresa ficticia "Acme S.A." — NO usar marcas reales en labs.
+     Variables GoPhish: {{.FirstName}} {{.LastName}} {{.Email}} {{.URL}} -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acme S.A. — Verificación de cuenta</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f1f5f9;font-family:Arial,Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f1f5f9;padding:24px 0;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:8px;overflow:hidden;">
+          <tr>
+            <td style="background-color:#0f172a;color:#ffffff;padding:20px 28px;font-size:20px;font-weight:bold;">
+              Acme S.A. <span style="font-weight:normal;font-size:14px;">— Seguridad de cuentas</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:28px;">
+              <p style="font-size:15px;color:#0f172a;">Estimado/a {{.FirstName}},</p>
+              <p style="font-size:14px;color:#334155;">
+                Detectamos un inicio de sesión inusual en tu cuenta corporativa.
+                Por favor validá tu identidad en las próximas 24 horas:
+              </p>
+              <p style="text-align:center;margin:28px 0;">
+                <a href="{{.URL}}" style="background-color:#0284c7;color:#ffffff;padding:12px 32px;text-decoration:none;border-radius:6px;font-size:15px;font-weight:bold;">Validar cuenta</a>
+              </p>
+              <p style="font-size:12px;color:#64748b;">
+                Si no fuiste vos, ignorá este mensaje y avisá a seguridad@acme-noa.test.
+                Laboratorio educativo — remitente y dominio ficticios.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color:#f8fafc;color:#94a3b8;font-size:11px;padding:14px 28px;">
+              © 2026 Acme S.A. (empresa ficticia) — Mail de concientización para lab autorizado.
+            </td>
+          </tr>
+        </table>
+        <img src="{{.TrackingURL}}" width="1" height="1" alt="" />
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

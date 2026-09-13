@@ -48,11 +48,13 @@ El objetivo del proyecto es comprender el ciclo completo de una campaña de inge
 ```text
 Gophish-Lab/
 │
-├── screenshots/
-├── report/
-├── templates/
-├── campaign/
-├── config/
+├── index.html               # Landing demo pública (case study, sin captura)
+├── wrangler.toml            # Deploy Cloudflare Workers
+├── screenshots/             # Evidencias del lab (01,02,03,04,07)
+├── report/                  # informe-hallazgos.md (agregados, sin PII)
+├── templates/               # email-template.html (starter Acme, marca ficticia)
+├── campaign/                # campaign-config.md (runbook reutilizable)
+├── config/                  # config-example.md (perfil SMTP Mailpit)
 └── README.md
 ```
 
@@ -79,6 +81,12 @@ Gophish-Lab/
 
 ---
 
+### 04 — Landing page de captura simulada
+![Landing Page Login](screenshots/04-landing-page-login.png)
+> Página de login clonada para el lab. En producción de concientización se reemplaza por la landing de capacitación (`index.html`).
+
+---
+
 ### 07 — Timeline forense + Credenciales capturadas
 ![Credentials Captured](screenshots/07-credentials-captured.png)
 > Ciclo completo cerrado. Tiempo total del ataque: **3 minutos 6 segundos**.
@@ -91,6 +99,18 @@ Gophish-Lab/
 | Submitted Data | 7:20:55 pm | +3 min 6 seg |
 
 > OS detectado automáticamente: Linux x86_64 · Firefox 140.0
+
+> 📝 El starter versionado en `templates/email-template.html` usa la marca ficticia **Acme S.A.** — las capturas 02/03 muestran el lab original con fines de evidencia.
+
+---
+
+## 🌐 Demo pública
+
+Landing de capacitación y case study del lab (sin captura de datos):
+
+**[gophishlab.lucaslean1806.workers.dev](https://gophishlab.lucaslean1806.workers.dev)**
+
+> 🛡️ La demo es solo material de concientización. El laboratorio real corre aislado en Kali + Mailpit y sus datos (targets, credenciales) nunca salen del lab.
 
 ---
 
