@@ -3,3 +3,11 @@
 worker.js
 wrangler.toml
 .assetsignore
+# Docs internas del lab: visibles en GitHub, no se sirven en el sitio.
+# index.html solo usa screenshots/01, 02 y 07.
+campaign/
+config/
+report/
+templates/
+screenshots/03-mailpit-email-rendered.png
+screenshots/04-landing-page-login.png
