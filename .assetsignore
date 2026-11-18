@@ -3,8 +3,13 @@
 worker.js
 wrangler.toml
 .assetsignore
+.gitignore
+README.md
+LICENSE
+_headers
+captures/
 # Docs internas del lab: visibles en GitHub, no se sirven en el sitio.
-# index.html solo usa screenshots/01, 02 y 07.
+# index.html solo usa screenshots/01, 02 y 07 (png y webp).
 campaign/
 config/
 report/

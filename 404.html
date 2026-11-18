@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Ruta no encontrada | Gophish Lab</title>
+<meta name="theme-color" content="#0a0e14">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e14;
+    --bg-panel: #0f1420;
+    --bg-terminal: #080b11;
+    --line: #1c2433;
+    --text: #d7e0ee;
+    --text-secondary: #9aa7bd;
+    --text-tertiary: #8b98b0;
+    --green: #3ef08c;
+    --green-deep: #23c974;
+    --red: #ff5c76;
+    --amber: #ffc35c;
+    --cyan: #5fdcff;
+    --font-ui: 'Space Grotesk', system-ui, sans-serif;
+    --font-data: 'JetBrains Mono', ui-monospace, monospace;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--green);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-data);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    line-height: 1.6;
+    background-image: radial-gradient(circle at 50% 20%, rgba(62,240,140,0.06), transparent 50%);
+  }
+  :is(a,button):focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: 4px; }
+  .box {
+    max-width: 620px;
+    width: 100%;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #0c1119;
+    border-bottom: 1px solid var(--line);
+  }
+  .tdot { width: 10px; height: 10px; border-radius: 50%; }
+  .r { background: #ff5f57; } .y { background: #ffbd2e; } .g { background: #28c840; }
+  .title { margin-left: 8px; font-size: 0.75rem; color: var(--text-tertiary); font-family: var(--font-data); }
+  .body { padding: 28px 24px; text-align: left; }
+  .status-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(255,92,118,0.12);
+    border: 1px solid rgba(255,92,118,0.4);
+    color: var(--red);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-ui);
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+  }
+  .terminal-box {
+    background: var(--bg-terminal);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    font-size: 0.82rem;
+    margin-bottom: 24px;
+    color: var(--text-tertiary);
+  }
+  .terminal-box .cmd { color: #fff; }
+  .terminal-box .err { color: var(--red); }
+  .btn-group {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: var(--font-ui);
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 12px 22px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn.primary {
+    background: var(--green);
+    color: #04140b;
+    border-color: var(--green);
+  }
+  .btn.primary:hover { background: var(--green-deep); }
+  .btn:not(.primary):hover { border-color: var(--green); color: var(--green); }
+</style>
+</head>
+<body>
+  <main class="box" role="main">
+    <div class="bar" aria-hidden="true">
+      <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+      <span class="title">gophish-lab — 404 handler</span>
+    </div>
+    <div class="body">
+      <span class="status-badge">HTTP 404 — Not Found</span>
+      <h1>Recurso no encontrado</h1>
+      <p>La ruta o archivo solicitado no existe en este servidor o fue protegido del acceso público en el laboratorio.</p>
+      <div class="terminal-box" aria-hidden="true">
+        <div><span style="color:var(--green)">kali@kali</span>:~$ curl -I https://gophishlab.lucaslean1806.workers.dev<span id="req-path"></span></div>
+        <div class="err">HTTP/2 404 Not Found</div>
+        <div>x-content-type-options: nosniff</div>
+        <div>status: isolated_lab_boundary</div>
+      </div>
+      <div class="btn-group">
+        <a href="/" class="btn primary">Volver al inicio →</a>
+        <a href="https://github.com/Lucas18062025/Gophish-Lab" class="btn">Ver repositorio GitHub</a>
+      </div>
+    </div>
+  </main>
+  <script>
+    (function(){
+      var p = document.getElementById('req-path');
+      if (p && window.location.pathname) {
+        p.textContent = window.location.pathname;
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -25,12 +25,37 @@ const GOOGLE_FILE = "/google0cbe515c88088343.html";
 const GOOGLE_BODY = "google-site-verification: google0cbe515c88088343.html";
 
 async function secAssets(request, env) {
-    const res = await env.ASSETS.fetch(request);
+    let res = await env.ASSETS.fetch(request);
+    const url = new URL(request.url);
+
+    // Si el recurso no existe y la petición solicita HTML, servir página 404 personalizada
+    if (res.status === 404 && (request.headers.get("accept") || "").includes("text/html")) {
+        try {
+            const notFoundRes = await env.ASSETS.fetch(new URL("/404.html", request.url));
+            if (notFoundRes.status === 200) {
+                res = notFoundRes;
+                const h404 = new Headers(res.headers);
+                for (const [k, v] of Object.entries(SEC_HEADERS)) h404.set(k, v);
+                h404.set("Content-Type", "text/html; charset=utf-8");
+                h404.set("Content-Security-Policy", CSP);
+                return new Response(res.body, { status: 404, headers: h404 });
+            }
+        } catch {
+            // fallback al comportamiento default
+        }
+    }
+
     const h = new Headers(res.headers);
     for (const [k, v] of Object.entries(SEC_HEADERS)) h.set(k, v);
     if ((h.get("Content-Type") || "").includes("text/html")) {
         h.set("Content-Security-Policy", CSP);
     }
+
+    // Optimización de caché para recursos estáticos pesados/inmutables
+    if (res.status === 200 && /\.(png|webp|svg|ico|jpg|jpeg|woff2?|css|js)$/i.test(url.pathname)) {
+        h.set("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800");
+    }
+
     return new Response(res.body, { status: res.status, headers: h });
 }
 
